@@ -131,7 +131,6 @@ const FormBuilder = () => {
             <ImageUpload
               value={form.headerImage}
               onChange={(url) => setForm(prev => ({ ...prev, headerImage: url }))}
-              placeholder="Upload header image..."
             />
           </div>
         </CardContent>
