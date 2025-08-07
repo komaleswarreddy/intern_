@@ -17,7 +17,7 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 // MongoDB connection string
-const MONGODB_URI = 'mongodb+srv://n210038:asdf@cluster0.ah6vp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://n210038:asdf@cluster0.ah6vp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 // Security middleware
 app.use(helmet())
