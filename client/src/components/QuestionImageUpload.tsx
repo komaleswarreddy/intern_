@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Upload, X, Image as ImageIcon } from 'lucide-react'
+import { X, Image as ImageIcon } from 'lucide-react'
 import { uploadApi } from '@/utils/api'
 import toast from 'react-hot-toast'
 

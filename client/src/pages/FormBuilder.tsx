@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Plus, Save, Settings } from 'lucide-react'
-import { Form, Question } from '@/types'
+import { Form, Question, CategorizeQuestion, ClozeQuestion, ComprehensionQuestion } from '@/types'
 import { formApi } from '@/utils/api'
 import ImageUpload from '@/components/ImageUpload'
 import QuestionImageUpload from '@/components/QuestionImageUpload'
@@ -50,22 +50,31 @@ const FormBuilder = () => {
   }
 
   const addQuestion = (type: Question['type']) => {
-    const newQuestion: Question = {
-      type,
-      text: '',
-      ...(type === 'categorize' && {
+    let newQuestion: Question
+    
+    if (type === 'categorize') {
+      newQuestion = {
+        type: 'categorize',
+        text: '',
         categories: ['Category 1', 'Category 2'],
         items: ['Item 1', 'Item 2'],
         answerKey: {}
-      }),
-      ...(type === 'cloze' && {
+      } as CategorizeQuestion
+    } else if (type === 'cloze') {
+      newQuestion = {
+        type: 'cloze',
         text: 'The capital of France is ___.',
         blanks: ['Paris']
-      }),
-      ...(type === 'comprehension' && {
+      } as ClozeQuestion
+    } else if (type === 'comprehension') {
+      newQuestion = {
+        type: 'comprehension',
+        text: '',
         passage: 'Enter your passage here...',
         subQuestions: []
-      })
+      } as ComprehensionQuestion
+    } else {
+      throw new Error(`Unknown question type: ${type}`)
     }
 
     setForm(prev => ({

@@ -8,11 +8,10 @@ import toast from 'react-hot-toast'
 interface ImageUploadProps {
   value?: string
   onChange: (url: string) => void
-  placeholder?: string
   className?: string
 }
 
-const ImageUpload = ({ value, onChange, placeholder = "Upload image...", className = "" }: ImageUploadProps) => {
+const ImageUpload = ({ value, onChange, className = "" }: ImageUploadProps) => {
   const [isDragOver, setIsDragOver] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [preview, setPreview] = useState<string | null>(value || null)
