@@ -7,9 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 
 const CategorizeQuestionEditor: React.FC<QuestionEditorProps> = ({
   question,
-  onUpdate,
-  onDelete,
-  onDuplicate
+  onUpdate
 }) => {
   const categorizeQuestion = question as CategorizeQuestion
   const [newCategory, setNewCategory] = useState('')

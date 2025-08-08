@@ -7,9 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 
 const ClozeQuestionEditor: React.FC<QuestionEditorProps> = ({
   question,
-  onUpdate,
-  onDelete,
-  onDuplicate
+  onUpdate
 }) => {
   const clozeQuestion = question as ClozeQuestion
   const [newOption, setNewOption] = useState('')

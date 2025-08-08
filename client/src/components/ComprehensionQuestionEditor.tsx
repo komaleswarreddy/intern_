@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Plus, X, GripVertical } from 'lucide-react'
+import { Plus, X } from 'lucide-react'
 import { ComprehensionQuestion, QuestionEditorProps } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -7,14 +7,11 @@ import { Card, CardContent } from '@/components/ui/card'
 
 const ComprehensionQuestionEditor: React.FC<QuestionEditorProps> = ({
   question,
-  onUpdate,
-  onDelete,
-  onDuplicate
+  onUpdate
 }) => {
   const comprehensionQuestion = question as ComprehensionQuestion
   const [newSubQuestion, setNewSubQuestion] = useState('')
   const [newOption, setNewOption] = useState('')
-  const [editingSubQuestionIndex, setEditingSubQuestionIndex] = useState<number | null>(null)
 
   const handleAddSubQuestion = () => {
     if (newSubQuestion.trim()) {

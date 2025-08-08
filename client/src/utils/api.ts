@@ -82,6 +82,22 @@ export const responseApi = {
   },
 }
 
+// Upload API functions
+export const uploadApi = {
+  // Upload image
+  uploadImage: async (file: File): Promise<ApiResponse<{ url: string }>> => {
+    const formData = new FormData()
+    formData.append('image', file)
+    
+    const response = await api.post('/upload/image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data
+  },
+}
+
 // Health check
 export const healthCheck = async (): Promise<ApiResponse<any>> => {
   const response = await api.get('/health')
