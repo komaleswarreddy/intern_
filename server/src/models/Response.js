@@ -5,6 +5,11 @@ const answerSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
+  questionType: {
+    type: String,
+    enum: ['categorize', 'cloze', 'comprehension'],
+    required: true
+  },
   answer: {
     type: mongoose.Schema.Types.Mixed, // Can be string, object, or array
     required: true

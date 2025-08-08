@@ -5,35 +5,40 @@ export type QuestionType = 'categorize' | 'cloze' | 'comprehension'
 export interface BaseQuestion {
   _id?: string
   type: QuestionType
-  text: string
-  image?: string
 }
 
 // Categorize Question
 export interface CategorizeQuestion extends BaseQuestion {
   type: 'categorize'
+  questionText: string
+  description?: string
   categories: string[]
-  items: string[]
-  answerKey: Record<string, string> // item -> category mapping
+  items: Array<{
+    label: string
+    correctCategory: string
+  }>
 }
 
-// Cloze Question
+// Cloze Question - Updated for drag-and-drop
 export interface ClozeQuestion extends BaseQuestion {
   type: 'cloze'
-  text: string // Contains ___ placeholders
-  blanks: string[] // Array of correct answers
+  questionText: string
+  sentence: string
+  blanks: Array<{
+    word: string
+    position: number
+    options: string[]
+  }>
 }
 
-// Comprehension Question
+// Comprehension Question - Updated for MCQ
 export interface ComprehensionQuestion extends BaseQuestion {
   type: 'comprehension'
   passage: string
   subQuestions: Array<{
-    _id?: string
-    text: string
-    type: 'multiple-choice' | 'fill-in-the-blank'
-    options?: string[] // For multiple choice
-    correctAnswer?: string | string[] // For fill-in-the-blank
+    questionText: string
+    options: string[]
+    correctAnswer: string
   }>
 }
 
@@ -45,11 +50,8 @@ export interface Form {
   _id?: string
   title: string
   description?: string
-  headerImage?: string
   questions: Question[]
-  isPublic: boolean
-  responseLimit?: number
-  deadline?: Date
+  createdBy?: string
   createdAt?: Date
   updatedAt?: Date
 }
@@ -57,6 +59,7 @@ export interface Form {
 // Response Interfaces
 export interface Answer {
   questionId: string
+  questionType: QuestionType
   answer: string | Record<string, string> | string[]
 }
 
@@ -65,14 +68,16 @@ export interface FormResponse {
   formId: string
   answers: Answer[]
   submittedAt?: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 // API Response Types
 export interface ApiResponse<T> {
   success: boolean
   data?: T
-  message?: string
   error?: string
+  details?: any[]
 }
 
 // Form Builder State
@@ -83,15 +88,24 @@ export interface FormBuilderState {
   isDirty: boolean
 }
 
-// Upload Response
-export interface UploadResponse {
-  url: string
-  publicId: string
+// Form Editor Mode
+export interface FormEditorMode {
+  mode: 'editor' | 'preview' | 'fill'
+  currentQuestion?: Question
 }
 
-// Dashboard Stats
-export interface FormStats {
-  totalResponses: number
-  averageCompletionTime: number
-  responseRate: number
+// Question Editor Props
+export interface QuestionEditorProps {
+  question: Question
+  onUpdate: (question: Question) => void
+  onDelete: () => void
+  onDuplicate: () => void
+}
+
+// Form Fill Mode
+export interface FormFillMode {
+  form: Form
+  responses: Record<string, any>
+  onResponseChange: (questionId: string, answer: any) => void
+  onSubmit: () => void
 } 

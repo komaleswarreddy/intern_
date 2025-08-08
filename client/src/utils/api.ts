@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Form, FormResponse, UploadResponse, ApiResponse } from '@/types'
+import { Form, FormResponse, ApiResponse } from '@/types'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
@@ -60,12 +60,6 @@ export const formApi = {
     return response.data
   },
 
-  // Delete a form
-  delete: async (id: string): Promise<ApiResponse<void>> => {
-    const response = await api.delete(`/forms/${id}`)
-    return response.data
-  },
-
   // Get all forms (for dashboard)
   getAll: async (): Promise<ApiResponse<Form[]>> => {
     const response = await api.get('/forms')
@@ -77,50 +71,13 @@ export const formApi = {
 export const responseApi = {
   // Submit a form response
   submit: async (formId: string, answers: any[]): Promise<ApiResponse<FormResponse>> => {
-    const response = await api.post(`/forms/${formId}/responses`, { answers })
+    const response = await api.post('/responses', { formId, answers })
     return response.data
   },
 
   // Get all responses for a form
   getByFormId: async (formId: string): Promise<ApiResponse<FormResponse[]>> => {
-    const response = await api.get(`/forms/${formId}/responses`)
-    return response.data
-  },
-
-  // Get a specific response
-  getById: async (id: string): Promise<ApiResponse<FormResponse>> => {
-    const response = await api.get(`/responses/${id}`)
-    return response.data
-  },
-}
-
-// Upload API functions
-export const uploadApi = {
-  // Upload an image
-  uploadImage: async (file: File): Promise<ApiResponse<UploadResponse>> => {
-    const formData = new FormData()
-    formData.append('image', file)
-
-    const response = await api.post('/upload/image', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    return response.data
-  },
-
-  // Upload multiple images
-  uploadMultipleImages: async (files: File[]): Promise<ApiResponse<UploadResponse[]>> => {
-    const formData = new FormData()
-    files.forEach((file) => {
-      formData.append('images', file)
-    })
-
-    const response = await api.post('/upload/images', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    const response = await api.get(`/responses/${formId}`)
     return response.data
   },
 }

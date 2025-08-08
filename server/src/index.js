@@ -9,7 +9,6 @@ import mongoose from 'mongoose'
 
 import formRoutes from './routes/formRoutes.js'
 import responseRoutes from './routes/responseRoutes.js'
-import uploadRoutes from './routes/uploadRoutes.js'
 
 dotenv.config()
 
@@ -40,9 +39,6 @@ app.use(morgan('combined'))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 
-// Static files
-app.use('/uploads', express.static('uploads'))
-
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ 
@@ -55,8 +51,7 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/forms', formRoutes)
-app.use('/api', responseRoutes)  // Mount response routes at /api to handle /api/forms/:formId/responses
-app.use('/api/upload', uploadRoutes)
+app.use('/api/responses', responseRoutes)
 
 // 404 handler
 app.use('*', (req, res) => {
